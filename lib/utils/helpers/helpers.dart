@@ -1,4 +1,11 @@
 class Helpers {
+  static bool validateName(String name) {
+    if (name.isEmpty || name == null) {
+      return false;
+    }
+    return true;
+  }
+
   static bool validateEmail(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';

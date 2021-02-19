@@ -19,6 +19,8 @@ ThemeData baseTheme = ThemeData(
   /// Sub themes
   textTheme: _textTheme,
   iconTheme: _iconTheme,
+  inputDecorationTheme: _inputDecoration,
+  dividerTheme: _dividerTheme,
 );
 
 TextTheme _textTheme = TextTheme(
@@ -26,9 +28,48 @@ TextTheme _textTheme = TextTheme(
     color: primaryTextColor,
     fontWeight: FontWeight.w400,
   ),
+  headline4: GoogleFonts.raleway(
+    color: primaryTextColor,
+    fontWeight: FontWeight.w400,
+  ),
+  bodyText1: GoogleFonts.raleway(
+    color: primaryTextColor,
+    fontWeight: FontWeight.w200,
+  ),
+  bodyText2: GoogleFonts.raleway(
+    color: primaryTextColor,
+    fontWeight: FontWeight.w200,
+  ),
+  button: GoogleFonts.raleway(
+    color: primaryColor,
+    fontWeight: FontWeight.w200,
+  ),
 );
 
 IconThemeData _iconTheme = IconThemeData(
   color: accentColor,
   size: 100,
+);
+
+InputDecorationTheme _inputDecoration = InputDecorationTheme(
+  hintStyle: GoogleFonts.raleway(
+    color: primaryTextColor,
+    fontWeight: FontWeight.w500,
+  ),
+  border: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: primaryColorLight,
+    ),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: accentColor,
+    ),
+  ),
+);
+
+DividerThemeData _dividerTheme = DividerThemeData(
+  color: dividerColor,
+  indent: 30,
+  endIndent: 30,
 );
