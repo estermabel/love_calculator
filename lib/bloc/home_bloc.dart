@@ -9,6 +9,8 @@ import 'package:love_calculator/service/config/base_response.dart';
 class HomeBloc {
   CalculatorService _calculatorService;
 
+  TextEditingController fname;
+  TextEditingController sname;
   StreamController<BaseResponse<Results>> _calculatorController;
 
   Stream<BaseResponse<Results>> get calculatorStream =>
@@ -18,6 +20,9 @@ class HomeBloc {
 
   HomeBloc() {
     _calculatorService = CalculatorService(APIService());
+    _calculatorController = StreamController.broadcast();
+    fname = TextEditingController();
+    sname = TextEditingController();
     results = Results();
   }
 

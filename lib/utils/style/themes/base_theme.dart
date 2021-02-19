@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../colors.dart';
+import '../colors.dart';
 import '../text_size.dart';
 
 ThemeData baseTheme = ThemeData(
@@ -15,6 +16,7 @@ ThemeData baseTheme = ThemeData(
   errorColor: errorColor,
   backgroundColor: primaryColorDark,
   scaffoldBackgroundColor: backgroundColor,
+  buttonColor: errorColor,
 
   /// Sub themes
   textTheme: _textTheme,
@@ -42,7 +44,7 @@ TextTheme _textTheme = TextTheme(
   ),
   button: GoogleFonts.raleway(
     color: primaryColor,
-    fontWeight: FontWeight.w200,
+    fontWeight: FontWeight.bold,
   ),
 );
 
