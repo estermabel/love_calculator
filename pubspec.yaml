@@ -23,6 +23,8 @@ dependencies:
   simple_animations: ^2.2.1
   # Used to get informations about the user's device
   device_info: ^1.0.0
+  # Used to custom the louncher icon
+  flutter_launcher_icons: ^0.8.1
 
   cupertino_icons: ^1.0.2
 
@@ -30,12 +32,17 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "aassets/images/icon_app.png"
+
 flutter:
 
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/icon_app.png
 
   # fonts:
   #   - family: Schyler

@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                     stream: _bloc.calculatorStream,
                     builder: (context, snapshot) {
                       if (snapshot.data != null) {
-                        switch (snapshot.data?.status) {
+                        switch (snapshot.data.status) {
                           case Status.LOADING:
                             return _onLoading();
                             break;

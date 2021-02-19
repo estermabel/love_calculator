@@ -20,7 +20,7 @@ class NativeLoading extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: CupertinoActivityIndicator(
-        animating: true, //animating,
+        animating: true,
       ),
     );
   }
