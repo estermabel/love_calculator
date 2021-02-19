@@ -3,7 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:love_calculator/bloc/home_bloc.dart';
+import 'package:love_calculator/components/native_loading.dart';
 import 'package:love_calculator/utils/helpers/helpers.dart';
+import 'package:love_calculator/utils/helpers/manage_dialogs.dart';
+
+import '../model/Results.dart';
+import '../service/config/base_response.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,14 +17,50 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeBloc _bloc = HomeBloc();
+  bool _isResultsVisible = false;
 
-  TextEditingController _fname = TextEditingController();
-  TextEditingController _sname = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _clear() {
+    _bloc.fname.clear();
+    _bloc.sname.clear();
+    setState(() {
+      _isResultsVisible = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc.fname?.dispose();
+    _bloc.fname = null;
+    _bloc.sname?.dispose();
+    _bloc.sname = null;
+    _bloc.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: IconTheme(
+              data: Theme.of(context).iconTheme.copyWith(
+                    size: 30,
+                  ),
+              child: Icon(Icons.refresh),
+            ),
+            onPressed: _clear,
+          )
+        ],
+      ),
       floatingActionButton: _searchButton(),
       body: SafeArea(
         child: Center(
@@ -32,22 +73,87 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
                   child: _textFormField(
-                    textEditingController: _fname,
+                    textEditingController: _bloc.fname,
                     hintText: "First name",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                   child: _textFormField(
-                    textEditingController: _sname,
+                    textEditingController: _bloc.sname,
                     hintText: "Second name",
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                  child: StreamBuilder<BaseResponse<Results>>(
+                    initialData: BaseResponse.completed(),
+                    stream: _bloc.calculatorStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.data != null) {
+                        switch (snapshot.data?.status) {
+                          case Status.LOADING:
+                            return _onLoading();
+                            break;
+                          case Status.ERROR:
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ManagerDialogs.showErrorDialog(
+                                context,
+                                snapshot.data.message,
+                              );
+                            });
+                            return Container();
+                            break;
+                          default:
+                            return _results(snapshot);
+                        }
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Visibility _results(AsyncSnapshot<BaseResponse<Results>> snapshot) {
+    return Visibility(
+      visible: _isResultsVisible,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              snapshot.data.data != null
+                  ? "${snapshot.data.data.percentage}%"
+                  : "",
+              style: Theme.of(context).textTheme.headline2.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              snapshot.data.data != null ? snapshot.data.data.result : "",
+              style: Theme.of(context).textTheme.headline4,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _onLoading() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+      child: NativeLoading(animating: true),
     );
   }
 
@@ -79,7 +185,7 @@ class _HomePageState extends State<HomePage> {
   TextFormField _textFormField(
       {TextEditingController textEditingController, String hintText}) {
     return TextFormField(
-      onChanged: (value) => textEditingController.text = value,
+      controller: textEditingController,
       keyboardType: TextInputType.text,
       style: TextStyle(color: Theme.of(context).accentColor),
       decoration: InputDecoration(
@@ -102,13 +208,16 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.search),
       ),
       onPressed: () {
-        if (Helpers.validateName(_fname.text) &&
-            Helpers.validateName(_sname.text)) {
-          _bloc.getResults(fname: _fname.text, sname: _sname.text);
+        if (Helpers.validateName(_bloc.fname.text) &&
+            Helpers.validateName(_bloc.sname.text)) {
+          _bloc.getResults(fname: _bloc.fname.text, sname: _bloc.sname.text);
+          setState(() {
+            _isResultsVisible = true;
+          });
         } else {
           _buildAlertDialog(
-            title: "Campos inválidos!",
-            content: "Preencha todos os campos corretamente.",
+            title: "Invalid fields!",
+            content: "Complete all the fields correctly.",
           );
         }
       },
