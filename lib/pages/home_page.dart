@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                             return _results(snapshot);
                         }
                       } else {
-                        return Container();
+                        return _onLoading();
                       }
                     },
                   ),
