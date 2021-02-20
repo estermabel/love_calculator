@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.love_calculator">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="love_calculator"
+        android:label="Love Calculator"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
