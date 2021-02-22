@@ -19,7 +19,7 @@ $ flutter run
 
 1. Splash Screen
 
-https://user-images.githubusercontent.com/51540772/108644337-50d0bd00-748d-11eb-8c56-9306f3083463.png
+![splash](https://user-images.githubusercontent.com/51540772/108644425-a1e0b100-748d-11eb-8345-9a1c4e893f7b.png)
 
 2. Home Screen
 
