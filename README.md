@@ -23,15 +23,15 @@ $ flutter run
 
 2. Home Screen
 
-https://user-images.githubusercontent.com/51540772/108644356-66de7d80-748d-11eb-9013-84639fb80d79.png
+![home](https://user-images.githubusercontent.com/51540772/108644444-b8870800-748d-11eb-9823-21fbdb9691bf.png)
 
 3. Results
 
-https://user-images.githubusercontent.com/51540772/108644365-71991280-748d-11eb-9aaa-6b6ce27ae813.png
+![results](https://user-images.githubusercontent.com/51540772/108644443-b624ae00-748d-11eb-9d08-a2d0521a265d.png)
 
 4. Error
 
-https://user-images.githubusercontent.com/51540772/108644375-79f14d80-748d-11eb-9087-a9587f0721e3.png
+![error](https://user-images.githubusercontent.com/51540772/108644445-b9b83500-748d-11eb-9c7e-b23cbea49ee4.png)
 
 ## Authors
 
